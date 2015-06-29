@@ -1,7 +1,6 @@
 # ReflectFrame
 
 名称：
-
 反射框架。
 
 作者：
@@ -37,9 +36,9 @@ simplesome
 5) ReflectConstructor.java反射构造函数类。
 6) ReflectField.java反射属性类。
 7) ReflectMethod.java反射方法类。
-8) ReflectMode.java反射处理模式类。
+8) ReflectMode.java反射模式类。
 9) AbsReflectFactory.java反射工厂抽象类。
-10) ReflectFactoryImpl.java实现AbsReflectFactory.java
+10) ReflectFactoryImpl.java反射工厂实现类AbsReflectFactory.java
 11) ReflectFactory.java反射工厂创建类。
 12) ReflectTool.java反射工具类。
 
