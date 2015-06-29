@@ -36,9 +36,9 @@ simplesome
 6) ReflectField.java反射属性类。
 7) ReflectMethod.java反射方法类。
 8) ReflectMode.java反射处理模式类。
-9) AbsReflectFactory.java反射抽象工厂类。
+9) AbsReflectFactory.java反射工厂抽象类。
 10) ReflectFactoryImpl.java实现AbsReflectFactory.java
-11) ReflectFactory.java反射工厂静态类。
+11) ReflectFactory.java反射工厂创建类。
 12) ReflectTool.java反射工具类。
 
 调用流程：

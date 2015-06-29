@@ -1,6 +1,5 @@
 # ReflectFrame
 
-
 名称：
 反射框架。
 
@@ -24,7 +23,7 @@ simplesome
 3) 支持内部类。(后续版本支持)
 4) 效率高。
 5) 支持软引用机制，防止发生OOM。(后续版本支持)
-6) 不依赖第三方jar包。
+6) 不依赖第三方库。
 
 缺点:
 1) 非线程安全。
@@ -38,9 +37,9 @@ simplesome
 6) ReflectField.java反射属性类。
 7) ReflectMethod.java反射方法类。
 8) ReflectMode.java反射处理模式类。
-9) AbsReflectFactory.java反射抽象工厂类。
+9) AbsReflectFactory.java反射工厂抽象类。
 10) ReflectFactoryImpl.java实现AbsReflectFactory.java
-11) ReflectFactory.java反射工厂静态类。
+11) ReflectFactory.java反射工厂创建类。
 12) ReflectTool.java反射工具类。
 
 调用流程：
