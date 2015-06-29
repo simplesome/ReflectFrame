@@ -1,7 +1,7 @@
 # ReflectFrame
 
 
-请简读：readme.txt
+请阅读：readme.txt
 
 
 名称：
