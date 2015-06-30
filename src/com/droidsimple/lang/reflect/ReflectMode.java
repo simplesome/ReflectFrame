@@ -1,4 +1,4 @@
-package com.droidcommon.lang.reflect;
+package com.droidsimple.lang.reflect;
 
 /**
  * 反射模式类

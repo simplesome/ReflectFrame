@@ -1,11 +1,12 @@
-package com.droidcommon.lang.reflect;
+package com.droidsimple.lang.reflect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
+import com.droidsimple.util.Log;
+
 
 
 /**
@@ -478,15 +479,15 @@ public class ReflectClassImpl implements ReflectClass {
 		if(DEBUG) Log.w(TAG, "isMemberClass:"+isMemberClass());
 		if(DEBUG) Log.w(TAG, "isPrimitive:"+isPrimitive());
 		if(DEBUG) Log.w(TAG, "isSynthetic:"+isSynthetic());
-		//		if(DEBUG) Log.w(TAG, "isImplSerializable:"+isImplSerializable());
+		//		if(DEBUG) LogUtil.w(TAG, "isImplSerializable:"+isImplSerializable());
 
-		//		if(DEBUG) Log.w(TAG, "isImplParcelable:"+isImplParcelable());
+		//		if(DEBUG) LogUtil.w(TAG, "isImplParcelable:"+isImplParcelable());
 
 		if (this.reflectMode != null) {
 			if(DEBUG) Log.w(TAG, "mode:"+this.reflectMode.name());
 		}
 
-		//		if(DEBUG) Log.w(TAG, "isObject:"+this.isObject);
+		//		if(DEBUG) LogUtil.w(TAG, "isObject:"+this.isObject);
 
 		if(DEBUG) Log.w(TAG, "getConstructors size:"+this.getConstructors().size());
 		for (ReflectConstructor c : this.getConstructors()) {

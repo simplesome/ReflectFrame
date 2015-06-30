@@ -1,9 +1,10 @@
-package com.droidcommon.lang.reflect;
+package com.droidsimple.lang.reflect;
 
 
 import java.lang.reflect.InvocationTargetException;
 
-import android.util.Log;
+import com.droidsimple.util.Log;
+
 
 /**
  * 反射工具类
@@ -289,13 +290,13 @@ public class ReflectTool {
 	 * 例子：
 	 * +++无参数
 	 * // 得到构造函数
-	 * java.lang.reflect.Constructor<?> c = ReflectTool.getConstructor("com.droidcommon.lang.reflect.ReflectBBB");
+	 * java.lang.reflect.Constructor<?> c = ReflectTool.getConstructor("com.droidsimple.lang.reflect.ReflectBBB");
 	 * // 创建类的对象
 	 * Object objectClass = ReflectTool.createObject(c);
 	 * 
 	 * +++有参数
 	 * // 得到构造函数
-	 * java.lang.reflect.Constructor<?> c = ReflectTool.getConstructor("com.droidcommon.lang.reflect.ReflectBBB", int.class, String.class);
+	 * java.lang.reflect.Constructor<?> c = ReflectTool.getConstructor("com.droidsimple.lang.reflect.ReflectBBB", int.class, String.class);
 	 * // 创建类的对象
 	 * Object objectClass = ReflectTool.createObject(c, 34, "abvnnnn");
 	 * 
@@ -360,13 +361,13 @@ public class ReflectTool {
 	 * 例子：
 	 * +++无参数
 	 * // 得到构造函数
-	 * java.lang.reflect.Constructor<?> c = ReflectTool.getConstructor("com.droidcommon.lang.reflect.ReflectBBB");
+	 * java.lang.reflect.Constructor<?> c = ReflectTool.getConstructor("com.droidsimple.lang.reflect.ReflectBBB");
 	 * // 创建类的对象
 	 * Object objectClass = ReflectTool.createObject(c);
 	 * 
 	 * +++有参数
 	 * // 得到构造函数
-	 * java.lang.reflect.Constructor<?> c = ReflectTool.getConstructor("com.droidcommon.lang.reflect.ReflectBBB", int.class, String.class);
+	 * java.lang.reflect.Constructor<?> c = ReflectTool.getConstructor("com.droidsimple.lang.reflect.ReflectBBB", int.class, String.class);
 	 * // 创建类的对象
 	 * Object objectClass = ReflectTool.createObject(c, 34, "abvnnnn");
 	 * 
@@ -398,10 +399,10 @@ public class ReflectTool {
 	 * 例子：
 	 * 
 	 * 得到无参数的方法：
-	 * java.lang.reflect.Method method = ReflectTool.getMethod("com.droidcommon.lang.reflect.ReflectBBB", "private_static_print");
+	 * java.lang.reflect.Method method = ReflectTool.getMethod("com.droidsimple.lang.reflect.ReflectBBB", "private_static_print");
 	 * 
 	 * 得到有参数的方法：
-	 * java.lang.reflect.Method method = ReflectTool.getMethod("com.droidcommon.lang.reflect.ReflectBBB", "public_static_print", int.class, String.class);
+	 * java.lang.reflect.Method method = ReflectTool.getMethod("com.droidsimple.lang.reflect.ReflectBBB", "public_static_print", int.class, String.class);
 	 * 
 	 * getDeclaredMethod()与getMethod()之间的区别：
 	 * 由此可见，getDeclaredMethod*()获取的是类自身声明的所有方法，包含public、protected和private方法。
@@ -475,19 +476,20 @@ public class ReflectTool {
 	/**
 	 * 调用对象的方法
 	 * 
-	 * @param objectClass 对象，可以为null
+	 * @param entity 对象，可以为null
 	 * @param method 反射方法
 	 * @param args 参数列表
 	 * @return
 	 */
-	public static Object invokeMethod(Object objectClass, java.lang.reflect.Method method, Object... args) {
+	public static Object invokeMethod(Object entity, java.lang.reflect.Method method, Object... args) {
 		if (method == null) {
 			if(DEBUG) Log.e(TAG, new NullPointerException("method == null").toString());
 			return null;
 		}
+		
 		try {
 			method.setAccessible(true); // 调用私有的方法要setAccessible(true)
-			return method.invoke(objectClass, args);
+			return method.invoke(entity, args);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -503,11 +505,11 @@ public class ReflectTool {
 	 * 
 	 * 例子：
 	 * 		// 无参数
-		java.lang.reflect.Method m1 = ReflectTool.getMethod("com.droidcommon.lang.reflect.ReflectBBB", "private_static_print");
+		java.lang.reflect.Method m1 = ReflectTool.getMethod("com.droidsimple.lang.reflect.ReflectBBB", "private_static_print");
 		ReflectTool.invokeStaticMethod(m1);
 
 		// 有参数
-		java.lang.reflect.Method m2 = ReflectTool.getMethod("com.droidcommon.lang.reflect.ReflectBBB", "public_static_print", int.class, String.class);
+		java.lang.reflect.Method m2 = ReflectTool.getMethod("com.droidsimple.lang.reflect.ReflectBBB", "public_static_print", int.class, String.class);
 		ReflectTool.invokeStaticMethod(m2, 3, "aaaa");
 	 * 
 	 * @param method

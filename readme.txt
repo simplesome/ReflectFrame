@@ -14,7 +14,7 @@ simplesome
 使用场景：
 1) 获取隐藏类。
 2) 构建ORM框架，如：构建SQLite框架。
-3) 开发环境的向上兼容，如：android sdk 2.2开发环境使用2.3 API。
+3) 开发环境向上兼容，如：android sdk 2.2开发环境使用2.3 API。
 
 优点：
 1) 支持java.io.Serializable、android.os.Parcelable序列化的类。
@@ -22,10 +22,14 @@ simplesome
 3) 支持内部类。(后续版本支持)
 4) 效率高。
 5) 支持软引用机制，防止发生OOM。(后续版本支持)
-6) 不依赖第三方库。
+6) 除了log.jar不依赖其它第三方库。
+7) 可用于J2SE开发环境。
 
 缺点:
 1) 非线程安全。
+
+第三方依赖库：
+日志库log.jar
 
 类说明：
 1) ReflectClass.java反射接口类。

@@ -1,6 +1,7 @@
-package com.droidcommon.lang.reflect;
+package com.droidsimple.lang.reflect;
 
-import android.util.Log;
+import com.droidsimple.util.Log;
+
 
 /**
  * 反射方法类
@@ -117,7 +118,7 @@ public class ReflectMethod {
 		if(DEBUG) Log.w(TAG, "------ ReflectMethod print() start ------");
 
 		if(DEBUG) Log.w(TAG, "getName:"+getName());
-		//		if(DEBUG) Log.w(TAG, "getCanonicalName:"+getCanonicalName());
+		//		if(DEBUG) LogUtil.w(TAG, "getCanonicalName:"+getCanonicalName());
 		if(DEBUG) Log.w(TAG, "toString:"+toString());
 
 		if(DEBUG) Log.w(TAG, "getModifier:"+getModifier());

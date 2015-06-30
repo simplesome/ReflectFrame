@@ -1,4 +1,4 @@
-package com.droidcommon.lang.reflect;
+package com.droidsimple.lang.reflect;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +49,7 @@ public class ReflectClassCache {
 		}else{
 			// 比较mode，如果mode不相同，则替换
 			//			if (c.getReflectMode() != mode) {
-			//				Log.w(TAG, "c.getReflectMode() != mode");
+			//				LogUtil.w(TAG, "c.getReflectMode() != mode");
 			//				mapClass.remove(key);
 			//				mapClass.put(key, c);
 			//			}
@@ -70,7 +70,7 @@ public class ReflectClassCache {
 		}else{
 			// 比较mode，如果mode不相同，则替换
 			//			if (c.getReflectMode() != mode) {
-			//				Log.w(TAG, "c.getReflectMode() != mode");
+			//				LogUtil.w(TAG, "c.getReflectMode() != mode");
 			//				mapClass.remove(key);
 			//				mapClass.put(key, c);
 			//			}
@@ -91,7 +91,7 @@ public class ReflectClassCache {
 		}else{
 			// 比较mode，如果mode不相同，则替换
 			//			if (c.getReflectMode() != mode) {
-			//				Log.w(TAG, "c.getReflectMode() != mode");
+			//				LogUtil.w(TAG, "c.getReflectMode() != mode");
 			//				mapClass.remove(key);
 			//				mapClass.put(key, c);
 			//			}

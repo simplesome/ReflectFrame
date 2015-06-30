@@ -1,9 +1,10 @@
-package com.droidcommon.lang.reflect;
+package com.droidsimple.lang.reflect;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import android.util.Log;
+import com.droidsimple.util.Log;
+
 
 /**
  * 反射无用属性和无用方法排除类。
@@ -39,8 +40,8 @@ public class ReflectClassExclude {
 	private static final String Exclude_Method_Parcelable_describeContents = "describeContents";
 	// public void writeToParcel(android.os.Parcel,int)
 	private static final String Exclude_Method_Parcelable_writeToParcel = "writeToParcel";
-	// static void access$0(com.droidcommon.lang.reflect.TestReflectBeanA,int)
-	// static void access$1(com.droidcommon.lang.reflect.TestReflectBeanA,java.lang.String)
+	// static void access$0(com.droidsimple.lang.reflect.TestReflectBeanA,int)
+	// static void access$1(com.droidsimple.lang.reflect.TestReflectBeanA,java.lang.String)
 	private static final String Exclude_Method_access = "access$"; // 这个是比较前缀
 
 	private static Map< String, String > exclede_method_parcelable_map = new HashMap< String, String>();

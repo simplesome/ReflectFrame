@@ -1,6 +1,7 @@
-package com.droidcommon.lang.reflect;
+package com.droidsimple.lang.reflect;
 
-import android.util.Log;
+import com.droidsimple.util.Log;
+
 
 /**
  * 反射构造函数类
@@ -122,7 +123,7 @@ public class ReflectConstructor {
 		if(DEBUG) Log.w(TAG, "------ ReflectConstructor print() start ------");
 
 		if(DEBUG) Log.w(TAG, "getName:"+getName());
-//		if(DEBUG) Log.w(TAG, "getCanonicalName:"+getCanonicalName());
+//		if(DEBUG) LogUtil.w(TAG, "getCanonicalName:"+getCanonicalName());
 		if(DEBUG) Log.w(TAG, "toString:"+this.constructor.toString());
 		if(DEBUG) Log.w(TAG, "toGenericString:"+this.constructor.toGenericString());
 

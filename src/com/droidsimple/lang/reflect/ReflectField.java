@@ -1,8 +1,9 @@
-package com.droidcommon.lang.reflect;
+package com.droidsimple.lang.reflect;
 
 import java.lang.reflect.Modifier;
 
-import android.util.Log;
+import com.droidsimple.util.Log;
+
 
 /**
  * 反射属性类
@@ -240,7 +241,7 @@ public class ReflectField {
 		if(DEBUG) Log.w(TAG, "getTypeString:"+this.getTypeString());
 		if(DEBUG) Log.w(TAG, "getGenericType:"+getField().getGenericType().toString()); // type
 
-//		if(DEBUG) Log.w(TAG, "getValue:"+getValue());
+//		if(DEBUG) LogUtil.w(TAG, "getValue:"+getValue());
 
 		if (this.field.getDeclaringClass() != null) {
 			if(DEBUG) Log.w(TAG, "getDeclaringClass:"+this.field.getDeclaringClass().getCanonicalName());
