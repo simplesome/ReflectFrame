@@ -29,7 +29,7 @@ https://github.com/simplesome/ReflectFrame.git
 3) 支持内部类。
 4) 效率高。
 5) 支持软引用机制，防止发生OOM。(后续版本支持)
-6) 除了reflect_log.jar不依赖其它第三方库。
+6) 除了droidsimple_log.jar不依赖其它第三方库。
 7) 可用于Android和J2SE开发环境。
 8) 完完整整的使用隐藏类。(后续版本支持)
 
@@ -37,7 +37,7 @@ https://github.com/simplesome/ReflectFrame.git
 1) 非线程安全。
 
 第三方依赖库：
-日志库reflect_log.jar(支持Android和J2SE两种开发环境)
+日志库droidsimple_log.jar(支持Android和J2SE两种开发环境)
 
 类说明：
 1) IReflectClass.java反射类接口类。
@@ -72,5 +72,5 @@ ReflectClassCache.put("android.view.View");
 将来要改良的特性：
 2) 改良ReflectTool.java
 4) 加入软引用机制或者LruCache。
-5) 完完整整的使用隐藏类。
+5) 完完整整的使用隐藏类。 
 7） 完善ReflectMode.java，还有两个参数不支持呢。
