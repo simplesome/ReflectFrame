@@ -31,7 +31,7 @@ https://github.com/simplesome/ReflectFrame.git
 5) 支持软引用机制，防止发生OOM。(后续版本支持)
 6) 除了reflect_log.jar不依赖其它第三方库。
 7) 可用于Android和J2SE开发环境。
-8) 很方便的使用隐藏类。(后续版本支持)
+8) 完完整整的使用隐藏类。(后续版本支持)
 
 缺点:
 1) 非线程安全。
