@@ -40,18 +40,17 @@ https://github.com/simplesome/ReflectFrame.git
 日志库reflect_log.jar(支持Android和J2SE两种开发环境)
 
 类说明：
-1) ReflectClass.java反射接口类。
+1) IReflectClass.java反射类接口类。
 2) ReflectClassCache.java内存缓存类。 
 3) ReflectClassExclude.java排除无用属性和无用方法。
-4) ReflectClassImpl.java实现ReflectClass.java接口类。
+4) ReflectClass.java反射类实现类。
 5) ReflectConstructor.java反射构造函数类。
 6) ReflectField.java反射属性类。
 7) ReflectMethod.java反射方法类。
 8) ReflectMode.java反射模式类。
-9) AbsReflectFactory.java反射工厂抽象类。
-10) ReflectFactoryImpl.java反射工厂实现类AbsReflectFactory.java
-11) ReflectFactory.java反射工厂创建类。
-12) ReflectTool.java反射工具类。
+9) AbsReflectClassFactory.java反射类工厂抽象类。
+10) ReflectClassFactory.java反射类工厂实现类
+11) ReflectTool.java反射工具类。
 
 调用流程：
 ReflectClassFactory -> ReflectClassCache -> ReflectClass
