@@ -46,7 +46,7 @@ public class ReflectTool {
 	 */
 	public static void setDebugEnable(boolean debug) {
 		DEBUG = debug;
-		ReflectClassImpl.setDebugEnable(debug);
+		ReflectClass.setDebugEnable(debug);
 		ReflectClassCache.setDebugEnable(debug);
 		ReflectClassExclude.setDebugEnable(debug);
 		ReflectConstructor.setDebugEnable(debug);
@@ -78,8 +78,8 @@ public class ReflectTool {
 	 * @param clazz
 	 * @return
 	 */
-	public static ReflectClassImpl parseClass(Class<?> clazz) {
-		return new ReflectClassImpl(clazz);
+	public static ReflectClass parseClass(Class<?> clazz) {
+		return new ReflectClass(clazz);
 	}
 
 	/**
@@ -88,8 +88,8 @@ public class ReflectTool {
 	 * @param object
 	 * @return
 	 */
-	public static ReflectClassImpl parseClass(Object object) {
-		return new ReflectClassImpl(object);
+	public static ReflectClass parseClass(Object object) {
+		return new ReflectClass(object);
 	}
 
 	/**
@@ -98,8 +98,8 @@ public class ReflectTool {
 	 * @param classPath
 	 * @return
 	 */
-	public static ReflectClassImpl parseClass(String classPath) {
-		return new ReflectClassImpl(classPath);
+	public static ReflectClass parseClass(String classPath) {
+		return new ReflectClass(classPath);
 	}
 
 	/**
@@ -109,8 +109,8 @@ public class ReflectTool {
 	 * @param declared
 	 * @return
 	 */
-	public static ReflectClassImpl parseClass(Class<?> clazz, ReflectMode declared) {
-		return new ReflectClassImpl(clazz, declared);
+	public static ReflectClass parseClass(Class<?> clazz, ReflectMode declared) {
+		return new ReflectClass(clazz, declared);
 	}
 
 	/**
@@ -120,8 +120,8 @@ public class ReflectTool {
 	 * @param declared
 	 * @return
 	 */
-	public static ReflectClassImpl parseClass(Object object, ReflectMode declared) {
-		return new ReflectClassImpl(object, declared);
+	public static ReflectClass parseClass(Object object, ReflectMode declared) {
+		return new ReflectClass(object, declared);
 	}
 
 	/**
@@ -131,8 +131,8 @@ public class ReflectTool {
 	 * @param declared
 	 * @return
 	 */
-	public static ReflectClassImpl parseCLass(String classPath, ReflectMode declared) {
-		return new ReflectClassImpl(classPath, declared);
+	public static ReflectClass parseCLass(String classPath, ReflectMode declared) {
+		return new ReflectClass(classPath, declared);
 	}
 
 	/**
@@ -414,10 +414,10 @@ public class ReflectTool {
 	 * 
 	 * @param classPath 类的绝对路径
 	 * @param methodName 方法名
-	 * @param methodParame 方法参数
+	 * @param methodParams 方法参数
 	 * @return
 	 */
-	public static java.lang.reflect.Method getMethod(String classPath, String methodName, Class<?>... methodParame) {
+	public static java.lang.reflect.Method getMethod(String classPath, String methodName, Class<?>... methodParams) {
 		if (isEmptyString(classPath)) {
 			if(DEBUG) Log.e(TAG, "isEmptyString(classPath) == true");
 			return null;
@@ -441,7 +441,7 @@ public class ReflectTool {
 
 		if (clazz != null) {
 			try {
-				method = clazz.getMethod(methodName, methodParame);
+				method = clazz.getMethod(methodName, methodParams);
 				isFinded = (method != null)?true:false;
 			} catch (SecurityException e) {
 				e.printStackTrace();
@@ -454,7 +454,7 @@ public class ReflectTool {
 
 		if (isFinded == false && clazz != null) { // 如果getDeclaredMethod()方法找不到，则使用getMethod()找。
 			try {
-				method = clazz.getDeclaredMethod(methodName, methodParame);
+				method = clazz.getDeclaredMethod(methodName, methodParams);
 				isFinded = (method != null)?true:false;
 			} catch (SecurityException e) {
 				e.printStackTrace();

@@ -8,6 +8,7 @@ import com.droidsimple.util.Log;
 
 /**
  * 反射无用属性和无用方法排除类。
+ * TODO 缺点：目前是按方法名进行过滤，建议也要包括方法的参数。
  * 
  * @author simplesome
  *
@@ -46,6 +47,10 @@ public class ReflectClassExclude {
 
 	private static Map< String, String > exclede_method_parcelable_map = new HashMap< String, String>();
 
+	private static final String Exclude_Method_Cloneable_clone = "clone";
+
+	private static Map< String, String > exclede_method_Cloneable_map = new HashMap< String, String>();
+
 	// 全部需要过滤的方法
 	private static Map< String, String > exclede_method_map = new HashMap< String, String>();
 
@@ -76,7 +81,10 @@ public class ReflectClassExclude {
 		exclede_method_parcelable_map.put(Exclude_Method_Parcelable_describeContents, Exclude_Method_Parcelable_describeContents);
 		exclede_method_parcelable_map.put(Exclude_Method_Parcelable_writeToParcel, Exclude_Method_Parcelable_writeToParcel);
 
+		exclede_method_Cloneable_map.put(Exclude_Method_Cloneable_clone, Exclude_Method_Cloneable_clone);
+
 		exclede_method_map.putAll(exclede_method_parcelable_map);
+		exclede_method_map.putAll(exclede_method_Cloneable_map);
 
 		// Object方法
 		exclede_object_method_map.put(Exclude_Object_Method_equals, Exclude_Object_Method_equals);
@@ -115,6 +123,24 @@ public class ReflectClassExclude {
 	}
 
 	/**
+	 * 添加要过滤的field
+	 * 
+	 * @param exculdeField
+	 */
+	public static void addExcludeField(String exculdeField) {
+		exclede_field_map.put(exculdeField, exculdeField);
+	}
+
+	/**
+	 * 得到过滤的field map
+	 * 
+	 * @return
+	 */
+	public static Map<String, String> getExcludeField() {
+		return exclede_field_map;
+	}
+
+	/**
 	 * 是否为排除的方法
 	 * 
 	 * @return
@@ -133,6 +159,24 @@ public class ReflectClassExclude {
 		}
 		if (DEBUG) Log.w(TAG, "isExcludeMethod:"+isExcludeMethod+",method:"+method);
 		return isExcludeMethod;
+	}
+
+	/**
+	 * 添加要过滤的method
+	 * 
+	 * @param exculdeMethod
+	 */
+	public static void addExcludeMethod(String exculdeMethod) {
+		exclede_method_map.put(exculdeMethod, exculdeMethod);
+	}
+
+	/**
+	 * 得到过滤的method map
+	 * 
+	 * @return
+	 */
+	public static Map<String, String> getExcludeMethod() {
+		return exclede_method_map;
 	}
 
 	/**

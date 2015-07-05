@@ -1,5 +1,7 @@
 package com.droidsimple.lang.reflect;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import com.droidsimple.util.Log;
@@ -18,23 +20,26 @@ public class ReflectField {
 	private static final String TAG = ReflectField.class.getSimpleName();
 	private static boolean DEBUG = false;
 
+	// 得到声明类<lass<?>，就是此方法所在的类。
+	private Class<?> clazz = null;
+
 	// 修饰符
-	private int modifier = java.lang.reflect.Modifier.PRIVATE;
+	private int modifier = Modifier.PRIVATE;
 
 	// 名称
 	private String name = null;
 
-	private String typeString = null;
-	private Class<?> typeClass = null;
+	// 类型的Class<?>
+	private Class<?> type = null;
 
 	// 自身
-	private java.lang.reflect.Field field = null;
+	private Field field = null;
 
 	// 枚举模式
 	private ReflectMode reflectMode = ReflectMode.Self_Exclude_Extends;
 
 	// 注释
-	private java.lang.annotation.Annotation[] annotations = null;
+	private Annotation[] annotations = null;
 
 	// 表示要解析的是clazz还是object
 	@Deprecated
@@ -55,14 +60,29 @@ public class ReflectField {
 		DEBUG = debug;
 	}
 
-	public ReflectField(java.lang.reflect.Field field, ReflectMode mode) {
+	public ReflectField(Field field, ReflectMode mode) {
 		init(field, mode, null);
 	}
 
+	// TODO 未实现,另一种表示field的方式 .
+	public ReflectField(Class<?> clazz, String fieldName) {
+
+	}
+
+	// TODO
+	public ReflectField(Object entity, String fieldName) {
+
+	}
+
+	// TODO
+	public ReflectField(String classPath, String fieldName) {
+
+	}
+
 	// TODO 不要传入实例，此框架用于获取Field、Method，所以不需要值。
-//	public ReflectField(java.lang.reflect.Field field, ReflectMode mode, Object entity) {
-//		init(field, mode, entity);
-//	}
+	//	public ReflectField(Field field, ReflectMode mode, Object entity) {
+	//		init(field, mode, entity);
+	//	}
 
 	/**
 	 * 初始化
@@ -70,7 +90,7 @@ public class ReflectField {
 	 * @param field
 	 * @param entity
 	 */
-	private void init(java.lang.reflect.Field field, ReflectMode mode, Object entity) {
+	private void init(Field field, ReflectMode mode, Object entity) {
 
 		this.field = field;
 
@@ -82,6 +102,9 @@ public class ReflectField {
 
 		this.reflectMode = mode;
 
+		// 得到声明类<lass<?>，就是此方法所在的类。
+		this.clazz = this.field.getDeclaringClass();
+
 		this.modifier = this.field.getModifiers();
 		this.name = this.field.getName();
 
@@ -90,8 +113,7 @@ public class ReflectField {
 		// 返回一个 Class 对象，它标识了此 Field 对象所表示字段的声明类型。
 		//		this.type = this.field.getType();
 
-		this.typeClass = this.field.getType();
-		this.typeString = this.field.getType().getCanonicalName();
+		this.type = this.field.getType();
 
 		//		this.isAccessible = this.field.isAccessible();
 		this.isEnumConstant = this.field.isEnumConstant();
@@ -107,6 +129,19 @@ public class ReflectField {
 	}
 
 	/**
+	 * 得到声明类<lass<?>，就是此属性所在的类。
+	 * 
+	 * @return
+	 */
+	public Class<?> getClazz() {
+		return this.clazz;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	/**
 	 * 得到值，这里要考虑是clazz还是object，
 	 * 要考虑field是否为static或者final等等
 	 * 
@@ -114,7 +149,7 @@ public class ReflectField {
 	 * @param entity
 	 * @return
 	 */
-	private Object getValue(java.lang.reflect.Field field, Object entity) {
+	private Object getValue(Field field, Object entity) {
 
 		Object value = null;
 		boolean isEntity = false;
@@ -157,36 +192,32 @@ public class ReflectField {
 		return getValue(this.field, entity);
 	}
 
-//	public Object getValue() {
-//		if (isEntity) {
-//			return getValue(this.field, this.entity);
-//		}else{
-//			return getValue(this.field, null);
-//		}
-//	}
+	//	public Object getValue() {
+	//		if (isEntity) {
+	//			return getValue(this.field, this.entity);
+	//		}else{
+	//			return getValue(this.field, null);
+	//		}
+	//	}
 
-	public Class<?> getTypeClass() {
-		return this.typeClass;
+	public Class<?> getType() {
+		return this.type;
 	}
 
-	public String getTypeString() {
-		return this.typeString;
-	}
+	//	public String getTypeString() {
+	//		return this.typeString;
+	//	}
 
-	public java.lang.reflect.Field getField() {
+	public Field getField() {
 		return this.field;
 	}
 
-	public java.lang.annotation.Annotation[] getAnnotations() {
+	public Annotation[] getAnnotations() {
 		return this.annotations;
 	}
 
 	public int getModifier() {
 		return this.modifier;
-	}
-
-	public String getName() {
-		return this.name;
 	}
 
 	public ReflectMode getReflectMode() {
@@ -201,6 +232,31 @@ public class ReflectField {
 	@Deprecated
 	public Object getEntity() {
 		return this.entity;
+	}
+
+	/**
+	 * 是否有注释 
+	 * 
+	 * @return
+	 */
+	public boolean hasAnnotation() {
+
+		if (this.annotations == null) {
+			return false;
+		}
+
+		if (this.annotations.length > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/*
+	 * 判断此注释是否存在（已验证）
+	 */
+	public boolean hasAnnotation(Class<? extends Annotation> annotationClass) {
+		return this.field.isAnnotationPresent(annotationClass);
 	}
 
 	public boolean isAccessible() {
@@ -225,32 +281,60 @@ public class ReflectField {
 	}
 
 	/**
+	 * 比较相等
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return this.field.equals(obj);
+	}
+
+	/**
+	 * 得到hash值
+	 * 
+	 * @return
+	 */
+	@Override
+	public int hashCode() {
+		return this.field.hashCode();
+	}
+
+	/**
 	 * 打印
 	 */
 	public void print() {
 		if(DEBUG) Log.w(TAG, "------ ReflectField print() start ------");
 
-		if(DEBUG) Log.w(TAG, "getName:"+getName());
-		if(DEBUG) Log.w(TAG, "toString:"+this.field.toString());
+		if(DEBUG) Log.w(TAG, "this.getName():"+this.getName());
 		if(DEBUG) Log.w(TAG, "toGenericString:"+this.field.toGenericString());
+		if(DEBUG) Log.w(TAG, "toString:"+this.field.toString());
 
 		if(DEBUG) Log.w(TAG, "getModifier:"+getModifier());
-		if(DEBUG) Log.w(TAG, "Modifier.toString:"+java.lang.reflect.Modifier.toString( getModifier() ));
+		if(DEBUG) Log.w(TAG, "Modifier.toString:"+Modifier.toString( getModifier() ));
 
-		if(DEBUG) Log.w(TAG, "getTypeClass:"+this.getTypeClass().getCanonicalName()); // Class<?>
-		if(DEBUG) Log.w(TAG, "getTypeString:"+this.getTypeString());
-		if(DEBUG) Log.w(TAG, "getGenericType:"+getField().getGenericType().toString()); // type
+		if (this.getType() != null) {
+			if(DEBUG) Log.w(TAG, "getType:"+this.getType().getName());
+		}
 
-//		if(DEBUG) LogUtil.w(TAG, "getValue:"+getValue());
+		if (this.getField().getGenericType() != null) {
+			if(DEBUG) Log.w(TAG, "getGenericType:"+this.getField().getGenericType().toString());
+		}
 
 		if (this.field.getDeclaringClass() != null) {
-			if(DEBUG) Log.w(TAG, "getDeclaringClass:"+this.field.getDeclaringClass().getCanonicalName());
+			if(DEBUG) Log.w(TAG, "getDeclaringClass:"+this.field.getDeclaringClass().getName());
 		}
 
 		if(DEBUG) Log.w(TAG, "isEntity:"+this.isEntity);
 
 		if (getAnnotations() != null) {
 			if(DEBUG) Log.w(TAG, "getAnnotations size:"+getAnnotations().length);
+			for (Annotation a : getAnnotations()) {
+				if(DEBUG) Log.w(TAG, "getAnnotations():annotationType():"+a.annotationType().getName());
+				if(DEBUG) Log.w(TAG, "getAnnotations():getClass()"+a.getClass().getName());
+				if(DEBUG) Log.w(TAG, "getAnnotations():toString()"+a.toString());
+			}
 		}
 
 		if(DEBUG) Log.w(TAG, "isAccessible:"+isAccessible());

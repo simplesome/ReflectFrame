@@ -1,5 +1,10 @@
 package com.droidsimple.lang.reflect;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
+
 import com.droidsimple.util.Log;
 
 
@@ -16,16 +21,20 @@ public class ReflectConstructor {
 	private static final String TAG = ReflectConstructor.class.getSimpleName();
 	private static boolean DEBUG = false;
 
+	// 得到声明类<lass<?>，就是此方法所在的类。
+	private Class<?> clazz = null;
+
 	// 自身构造
-	private java.lang.reflect.Constructor<?> constructor = null;
+	private Constructor<?> constructor = null;
 
 	// 修饰符
-	private int modifier = java.lang.reflect.Modifier.PUBLIC;
+	private int modifier = Modifier.PUBLIC;
 
 	// 名称
 	private String name = null;
+//	private String simpleName = null;
 
-//	private String canonicalName = null;
+	//	private String canonicalName = null;
 
 	// 枚举模式
 	private ReflectMode reflectMode = ReflectMode.Self_Exclude_Extends;
@@ -34,7 +43,7 @@ public class ReflectConstructor {
 	private boolean isVarArgs = false;
 
 	// 全部注解(不分解)
-	private java.lang.annotation.Annotation[] annotations = null;
+	private Annotation[] annotations = null;
 
 	/**
 	 * 设置调试日志开关
@@ -45,11 +54,11 @@ public class ReflectConstructor {
 		DEBUG = debug;
 	}
 
-	public ReflectConstructor(java.lang.reflect.Constructor<?> constructor) {
+	public ReflectConstructor(Constructor<?> constructor) {
 		init(constructor, ReflectMode.Self_Exclude_Extends);
 	}
 
-	public ReflectConstructor(java.lang.reflect.Constructor<?> constructor, ReflectMode mode) {
+	public ReflectConstructor(Constructor<?> constructor, ReflectMode mode) {
 		init(constructor, mode);
 	}
 
@@ -58,16 +67,20 @@ public class ReflectConstructor {
 	 * 
 	 * @param constructor
 	 */
-	private void init(java.lang.reflect.Constructor<?> constructor, ReflectMode mode) {
+	private void init(Constructor<?> constructor, ReflectMode mode) {
 
 		this.constructor = constructor;
 		this.reflectMode = mode;
 
+		// 得到声明类<lass<?>，就是此方法所在的类。
+		this.clazz = this.constructor.getDeclaringClass();
+
+		this.name = this.constructor.getName();
+
 		if (constructor.getDeclaringClass() != null) {
-			this.name = constructor.getDeclaringClass().getSimpleName();
-//			this.canonicalName = constructor.getDeclaringClass().getCanonicalName();
+//			this.simpleName = constructor.getDeclaringClass().getSimpleName();
 		}else{
-			this.name = constructor.getName();
+			
 		}
 
 		this.modifier = constructor.getModifiers();
@@ -84,25 +97,34 @@ public class ReflectConstructor {
 
 	}
 
-	public java.lang.reflect.Constructor<?> getConstructor() {
-		return this.constructor;
-	}
-
-	public java.lang.annotation.Annotation[] getAnnotations() {
-		return this.annotations;
-	}
-
-	public int getModifier() {
-		return this.modifier;
+	/**
+	 * 得到声明类<lass<?>，就是此构造所在的类。
+	 * 
+	 * @return
+	 */
+	public Class<?> getClazz() {
+		return this.clazz;
 	}
 
 	public String getName() {
 		return this.name;
 	}
 
-//	public String getCanonicalName() {
-//		return this.canonicalName;
+//	public String getSimpleName() {
+//		return this.simpleName;
 //	}
+
+	public Constructor<?> getConstructor() {
+		return this.constructor;
+	}
+
+	public Annotation[] getAnnotations() {
+		return this.annotations;
+	}
+
+	public int getModifier() {
+		return this.modifier;
+	}
 
 	public ReflectMode getReflectMode() {
 		return this.reflectMode;
@@ -117,33 +139,100 @@ public class ReflectConstructor {
 	}
 
 	/**
+	 * 比较相等
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return this.constructor.equals(obj);
+	}
+
+	/**
+	 * 得到hash值
+	 * 
+	 * @return
+	 */
+	@Override
+	public int hashCode() {
+		return this.constructor.hashCode();
+	}
+
+	/**
 	 * 打印
 	 */
 	public void print() {
 		if(DEBUG) Log.w(TAG, "------ ReflectConstructor print() start ------");
 
-		if(DEBUG) Log.w(TAG, "getName:"+getName());
-//		if(DEBUG) LogUtil.w(TAG, "getCanonicalName:"+getCanonicalName());
+		if(DEBUG) Log.w(TAG, "this.getName():"+this.getName());
+//		if(DEBUG) Log.w(TAG, "this.getSimpleName():"+this.getSimpleName());
 		if(DEBUG) Log.w(TAG, "toString:"+this.constructor.toString());
 		if(DEBUG) Log.w(TAG, "toGenericString:"+this.constructor.toGenericString());
 
 		if (this.constructor.getDeclaringClass() != null) {
-			if(DEBUG) Log.w(TAG, "getDeclaringClass:"+this.constructor.getDeclaringClass().getCanonicalName());
+			if(DEBUG) Log.w(TAG, "getDeclaringClass:"+this.constructor.getDeclaringClass().getName());
+		}
+
+		Class<?>[] exceptionTypes = this.constructor.getExceptionTypes();
+		if (exceptionTypes != null) {
+			if(DEBUG) Log.w(TAG, "getExceptionTypes() size:"+exceptionTypes.length);
+			for (Class<?> c : exceptionTypes) {
+				if(DEBUG) Log.w(TAG, "getExceptionTypes():"+c.getName());
+			}
+		}else{
+			if(DEBUG) Log.w(TAG, "getExceptionTypes: == null");
+		}
+
+		Class<?>[] parameterTypes = this.constructor.getParameterTypes();
+		if (parameterTypes != null) {
+			if(DEBUG) Log.w(TAG, "getParameterTypes() size:"+parameterTypes.length);
+			for (Class<?> c : parameterTypes) {
+				if(DEBUG) Log.w(TAG, "getParameterTypes():"+c.getName());
+			}
+		}else{
+			if(DEBUG) Log.w(TAG, "getParameterTypes: == null");
+		}
+
+		Type[] genericExceptionTypes = this.constructor.getGenericExceptionTypes();
+		if (genericExceptionTypes != null) {
+			if(DEBUG) Log.w(TAG, "getGenericExceptionTypes() size:"+genericExceptionTypes.length);
+			for (Type t : genericExceptionTypes) {
+				if(DEBUG) Log.w(TAG, "getGenericExceptionTypes():"+t.toString());
+			}
+		}else{
+			if(DEBUG) Log.w(TAG, "getGenericExceptionTypes: == null");
+		}
+
+		Type[] genericParameterTypes = this.constructor.getGenericParameterTypes();
+		if (genericParameterTypes != null) {
+			if(DEBUG) Log.w(TAG, "getGenericParameterTypes() size:"+genericParameterTypes.length);
+			for (Type t : genericParameterTypes) {
+				if(DEBUG) Log.w(TAG, "getGenericParameterTypes():"+t.toString());
+			}
+		}else{
+			if(DEBUG) Log.w(TAG, "getGenericParameterTypes: == null");
 		}
 
 		if(DEBUG) Log.w(TAG, "getModifier:"+getModifier());
-		if(DEBUG) Log.w(TAG, "Modifier.toString:"+java.lang.reflect.Modifier.toString( getModifier() ));
+		if(DEBUG) Log.w(TAG, "Modifier.toString:"+Modifier.toString( getModifier() ));
 
 		if (getAnnotations() != null) {
 			if(DEBUG) Log.w(TAG, "getAnnotations size:"+getAnnotations().length);
+			for (Annotation a : getAnnotations()) {
+				if(DEBUG) Log.w(TAG, "getAnnotations():annotationType():"+a.annotationType().getName());
+				if(DEBUG) Log.w(TAG, "getAnnotations():getClass()"+a.getClass().getName());
+				if(DEBUG) Log.w(TAG, "getAnnotations():toString()"+a.toString());
+			}
 		}
 
 		if(DEBUG) Log.w(TAG, "isSynthetic:"+isSynthetic());
 		if(DEBUG) Log.w(TAG, "isVarArgs:"+isVarArgs());
-		
-		if (this.reflectMode != null) {
-			if(DEBUG) Log.w(TAG, "mode:"+this.reflectMode.name());
+
+		if (this.getReflectMode() != null) {
+			if(DEBUG) Log.w(TAG, "mode:"+this.getReflectMode().name());
 		}
+
 		if(DEBUG) Log.w(TAG, "------ ReflectConstructor print() end ------");
 	}
 
